@@ -1,191 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather App</title>
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            box-sizing: border-box;
-        }
-        body{
-            background-color:lightblue;
-        }
-        .phone{
-            width: 80%;
-            max-width: 550px;
-            background:linear-gradient(888deg,red,yellow);
-            box-shadow:30px 30px 40px black;
-            text-align: center;
-            color:black;
-            margin:100px auto 0;
-            border-radius: 30px;
-            padding:40px 35px;
-        }
-        .search{
-            width:100%;
-            display:flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .weather{
-            color:white;
-        }
-        .search input{
-            border:1px solid black;
-            background-color:whitesmoke;
-            color:black;
-            border-radius: 20px;
-            padding: 25px 24px;
-            height: 40px;
-            flex:1;
-            margin-right:50px;
-            font-size:24px;
-        }
-        .search button{
-            border: 0;
-            background-color:whitesmoke;
-            border-radius:50%;
-            width:50px;
-            height:50px;
-            cursor: pointer;
-            margin-right:30px;
-
-        }
-        .search button img{
-            width:35px;
-        }
-        .error{
-            text-align: left;
-            margin-left: 10px;
-            font-size:30px;
-            margin-top:10px;
-            display: none;
-            color:white;
-
-        }
-        .weather-icon{
-            width:170px;
-            margin-top: 30px;
-        }
-        .weather h1{
-            font-size:80px;
-            font-weight:500;
-        }
-        .weather h2{
-            font-size: 50px;
-            font-weight:400;
-            margin-top:-10px;
-        }
-        .details{
-            display: flex;
-            align-items:center;
-            justify-content:space-between;
-            padding:0 20px;
-            margin-top: 50px;
-        }
-        .col{
-            display: flex;
-            align-items: center;
-            text-align: left;
-            font-size:30px;
-        }
-        .col img{
-            width:50px;
-            margin-right: 20px;
-        }
-        .humidity, .wind{
-            font-size:20px;
-            margin: top -40px;
-        }
-        .weather img{
-            border-radius: 50%;
-        }
-    </style>
-</head>
-<body>
+    <link rel="stylesheet" href="weather.css" />
+  </head>
+  <body>
     <div class="phone">
-        <div class="search">
-            <input type="text" placeholder="Enter City Name " spellcheck="false">
-            <button><img src="search.png"></button>
-        </div>
-        <div class="error">
-            <p>Invalid City Name </p>
-        </div>
-        <div class="weather">
-            <img src="/abhi.jpg" class="weather-icon">
-            <h1 class="temp">Abhi</h1>
-            <h2 class="city">--paris</h2>
-            <div class="details">
-                <div class="col">
-                    <img src="humidity.png">
-                    <div>
-                        <p class="humidity">50%</p>
-                        <p>humidity</p>
-                    </div>
-                </div>
-                <div class="col">
-                    <img src="wind.png">
-                    <div>
-                        <p class="wind">20 km/h</p>
-                        <p>Wind Speed</p>
-                    </div>
-                </div>
+      <div class="search">
+        <input type="text" placeholder="Enter City Name " spellcheck="false" />
+        <button><img src="search.png" /></button>
+      </div>
+      <div class="error">
+        <p>Invalid City Name</p>
+      </div>
+      <div class="weather">
+        <img src="/abhi.jpg" class="weather-icon" />
+        <h1 class="temp">Abhi</h1>
+        <h2 class="city">--paris</h2>
+        <div class="details">
+          <div class="col">
+            <img src="humidity.png" />
+            <div>
+              <p class="humidity">50%</p>
+              <p>humidity</p>
             </div>
+          </div>
+          <div class="col">
+            <img src="wind.png" />
+            <div>
+              <p class="wind">20 km/h</p>
+              <p>Wind Speed</p>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-    <script>
-        <!-- https://api.openweathermap.org/data/2.5/weather?q=jammu%20and%20kashmir&appid=22db50e01fd7cb2fe7a8394536a81461&units=metric -->
-        const apiKey="22db50e01fd7cb2fe7a8394536a81461";
-        const apiUrl="https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
-        const searchBox=document.querySelector(".search input");
-        const searchBtn=document.querySelector(".search button");
-        const weatherIcon=document.querySelector(".weather-icon");
-
-        async function checkWeather(city){
-            const response= await fetch(apiUrl+ city+`&appid=${apiKey}`);
-
-            if (response.status==404){
-                document.querySelector(".error").style.display="block";
-            }
-            else{
-
-            }
-            var data= await response.json();
-
-            console.log(data);
-            document.querySelector(".city").innerHTML=data.name;
-            document.querySelector(".temp").innerHTML=data.main.temp+"°C";
-            document.querySelector(".humidity").innerHTML=data.main.humidity+"%";
-            document.querySelector(".wind").innerHTML=data.wind.speed+"Km/h";
-
-            if (data.weather[0].main=="Clouds"){
-                weatherIcon.src="clouds.png";
-            }
-            else if (data.weather[0].main=="Clear"){
-                weatherIcon.src="clear.png";
-            }
-            else if (data.weather[0].main=="Rain"){
-                weatherIcon.src="rain.png";
-            }
-            else if (data.weather[0].main=="Drizzle"){
-                weatherIcon.src="drizzle.png";
-            }
-            else if (data.weather[0].main=="Mist"){
-                weatherIcon.src="mist.png";
-            }
-        }
-        
-
-        searchBtn.addEventListener("click",()=>{
-            checkWeather(searchBox.value);
-        });
-        
-    </script>
-</body>
+    <script src="weather.js"></script>
+  </body>
 </html>
 
 <!-- hyderabad
